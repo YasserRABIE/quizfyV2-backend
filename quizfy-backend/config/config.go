@@ -15,14 +15,14 @@ var (
 )
 
 func InitConfig() {
-	DBUser = getEnv("DB_USER", "postgres")
-	DBPassword = getEnv("DB_PASSWORD", "password")
-	DBName = getEnv("DB_NAME", "postgres")
-	DBHost = getEnv("DB_HOST", "localhost")
-	DBPort = getEnv("DB_PORT", "5432")
+	DBUser = GetEnv("DB_USER", "postgres")
+	DBPassword = GetEnv("DB_PASSWORD", "password")
+	DBName = GetEnv("DB_NAME", "postgres")
+	DBHost = GetEnv("DB_HOST", "localhost")
+	DBPort = GetEnv("DB_PORT", "5432")
 }
 
-func getEnv(key, defaultValue string) string {
+func GetEnv(key, defaultValue string) string {
 	if value, exists := os.LookupEnv(key); exists {
 		return value
 	}

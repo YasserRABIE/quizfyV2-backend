@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/quizfy/api/config"
+	"github.com/quizfy/api/models/user"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -21,5 +22,12 @@ func InitDB() {
 	})
 	if err != nil {
 		panic("failed to connect to db due to: " + err.Error())
+	}
+	InitTables()
+}
+
+func InitTables() {
+	if err := DB.AutoMigrate(&user.Account{}); err != nil {
+		panic("failed to migrate db due to: " + err.Error())
 	}
 }
