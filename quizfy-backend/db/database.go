@@ -23,7 +23,6 @@ func InitDB() {
 	if err != nil {
 		panic("failed to connect to db due to: " + err.Error())
 	}
-	InitTables()
 }
 
 func InitTables() {

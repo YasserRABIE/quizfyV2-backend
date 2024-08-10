@@ -9,6 +9,7 @@ import (
 func init() {
 	config.InitConfig()
 	db.InitDB()
+	db.InitTables()
 }
 
 func main() {
