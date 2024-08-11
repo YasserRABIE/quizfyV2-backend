@@ -3,9 +3,10 @@ package main
 import (
 	"log"
 
+	"github.com/YasserRABIE/QUIZFYv2/config"
+	"github.com/YasserRABIE/QUIZFYv2/db"
+	routes "github.com/YasserRABIE/QUIZFYv2/routes/user"
 	"github.com/gin-gonic/gin"
-	"github.com/quizfy/api/config"
-	"github.com/quizfy/api/db"
 )
 
 func init() {
@@ -21,6 +22,9 @@ func init() {
 
 func main() {
 	r := gin.Default()
+
+	// Register routes
+	routes.RegisterRoutes(r)
 
 	r.Run(config.GetEnv("PORT", ":3000"))
 }
