@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func Get(phone string) (*user.Quizzer, error) {
+func Get(phone uint) (*user.Quizzer, error) {
 	var q user.Quizzer
 	err := db.Conn.Where("phone = ?", phone).First(&q).Error
 
