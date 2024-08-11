@@ -23,8 +23,9 @@ func init() {
 func main() {
 	r := gin.Default()
 
+	api_v1 := r.Group("/api/v1")
 	// Register routes
-	routes.RegisterRoutes(r)
+	routes.RegisterRoutes(api_v1)
 
 	r.Run(config.GetEnv("PORT", ":3000"))
 }
