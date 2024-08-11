@@ -13,9 +13,9 @@ func Create(q *user.Quizzer) error {
 	if err != nil {
 		// Check if the error is due to a unique constraint violation
 		if errors.Is(err, gorm.ErrDuplicatedKey) {
-			return errors.New("this phone number is already registered")
+			return errors.New("الرقم ده مسجل قبل كده")
 		}
-		return errors.New("server error. please try again later")
+		return errors.New("حصل خطأ في السيرفر. حاول تاني بعد شوية")
 	}
 	return nil
 }

@@ -3,7 +3,7 @@ package quizzer
 import (
 	"net/http"
 
-	quizzerM "github.com/YasserRABIE/QUIZFYv2/migrations/register/quizzer_migration"
+	quizzerM "github.com/YasserRABIE/QUIZFYv2/migrations/quizzer_migration"
 	"github.com/YasserRABIE/QUIZFYv2/models/response"
 	"github.com/YasserRABIE/QUIZFYv2/models/user"
 	"github.com/YasserRABIE/QUIZFYv2/services/auth"
@@ -20,7 +20,7 @@ func Create(c *gin.Context) {
 		return
 	}
 
-	// Create quizzer
+	// Create quizzer in database
 	err = quizzerM.Create(&q)
 	if utils.HandleError(c, err, http.StatusBadRequest) {
 		return

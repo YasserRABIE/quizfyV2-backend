@@ -7,3 +7,8 @@ type Quizzer struct {
 	UserInfo
 	Subject string `json:"subject" gorm:"not null" binding:"required"`
 }
+
+type QLoginReq struct {
+	Phone    string `json:"phone" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
