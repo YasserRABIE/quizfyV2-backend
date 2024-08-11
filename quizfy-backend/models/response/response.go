@@ -5,7 +5,7 @@ type Response struct {
 	Data    interface{} `json:"data"`
 }
 
-func NewSucces(data interface{}) *Response {
+func NewSuccess(data interface{}) *Response {
 	return &Response{
 		Success: true,
 		Data:    data,
