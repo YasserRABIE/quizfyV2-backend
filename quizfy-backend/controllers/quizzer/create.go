@@ -20,6 +20,12 @@ func Create(c *gin.Context) {
 		return
 	}
 
+	// hash password
+	q.Password, err = auth.HashPass(q.Password)
+	if utils.HandleError(c, err, http.StatusInternalServerError) {
+		return
+	}
+
 	// Create quizzer in database
 	err = quizzerM.Create(&q)
 	if utils.HandleError(c, err, http.StatusBadRequest) {
