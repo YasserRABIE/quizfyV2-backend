@@ -9,6 +9,6 @@ type Quizzer struct {
 }
 
 type QLoginReq struct {
-	Phone    string `json:"phone" binding:"required"`
+	Phone    uint   `json:"phone" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
