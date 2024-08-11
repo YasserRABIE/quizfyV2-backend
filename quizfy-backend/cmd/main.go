@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/quizfy/api/config"
 	"github.com/quizfy/api/db"
@@ -8,8 +10,13 @@ import (
 
 func init() {
 	config.InitConfig()
-	db.InitDB()
-	db.InitTables()
+
+	if err := db.InitDB(); err != nil {
+		log.Fatalf("Database initialization failed: %v", err)
+	}
+	if err := db.InitTables(); err != nil {
+		log.Fatalf("Table migration failed: %v", err)
+	}
 }
 
 func main() {

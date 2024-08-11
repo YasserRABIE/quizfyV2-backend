@@ -11,7 +11,7 @@ import (
 
 var DB *gorm.DB
 
-func InitDB() {
+func InitDB() error {
 	dsn := fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%s sslmode=disable",
 		config.DBUser, config.DBPassword, config.DBName, config.DBHost, config.DBPort)
 
@@ -21,12 +21,18 @@ func InitDB() {
 		PrepareStmt:            true,
 	})
 	if err != nil {
-		panic("failed to connect to db due to: " + err.Error())
+		return fmt.Errorf("failed to connect to db: %w", err)
 	}
+	return nil
 }
 
-func InitTables() {
-	if err := DB.AutoMigrate(&user.Account{}); err != nil {
-		panic("failed to migrate db due to: " + err.Error())
+func InitTables() error {
+	tables := []interface{}{
+		&user.Student{},
+		&user.Quizzer{},
 	}
+	if err := DB.AutoMigrate(tables...); err != nil {
+		return fmt.Errorf("failed to migrate db: %w", err)
+	}
+	return nil
 }
