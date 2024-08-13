@@ -6,7 +6,7 @@ import (
 )
 
 // CreateFolder creates a folder in the given path.
-
+// It also creates the files create.go, get.go, update.go, delete.go in the folder.
 func CreateFolder(pkgName, path string) error {
 	if err := os.Mkdir(path, 0755); err != nil {
 		return err
