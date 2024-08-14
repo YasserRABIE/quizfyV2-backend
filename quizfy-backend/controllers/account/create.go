@@ -1,9 +1,9 @@
-package quizzer
+package user
 
 import (
 	"net/http"
 
-	quizzerM "github.com/YasserRABIE/QUIZFYv2/migrations/quizzer_migration"
+	user_migrations "github.com/YasserRABIE/QUIZFYv2/migrations/account_migrations"
 	"github.com/YasserRABIE/QUIZFYv2/models/response"
 	"github.com/YasserRABIE/QUIZFYv2/models/user"
 	"github.com/YasserRABIE/QUIZFYv2/services/auth"
@@ -12,28 +12,28 @@ import (
 )
 
 func Create(c *gin.Context) {
-	var q user.Quizzer
+	var a user.Account
 
 	// Bind request body
-	err := c.ShouldBindJSON(&q)
+	err := c.ShouldBindJSON(&a)
 	if utils.HandleError(c, err, http.StatusBadRequest) {
 		return
 	}
 
 	// hash password
-	q.Password, err = auth.HashPass(q.Password)
+	a.Password, err = auth.HashPass(a.Password)
 	if utils.HandleError(c, err, http.StatusInternalServerError) {
 		return
 	}
 
-	// Create quizzer in database
-	err = quizzerM.Create(&q)
+	// Create student in database
+	err = user_migrations.Create(&a)
 	if utils.HandleError(c, err, http.StatusBadRequest) {
 		return
 	}
 
 	// Generate token
-	token, err := auth.CreateToken(q.ID)
+	token, err := auth.CreateToken(a.ID)
 	if utils.HandleError(c, err, http.StatusInternalServerError) {
 		return
 	}

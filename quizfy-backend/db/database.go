@@ -29,8 +29,7 @@ func InitDB() error {
 
 func InitTables() error {
 	tables := []interface{}{
-		&user.Student{},
-		&user.Quizzer{},
+		&user.Account{},
 	}
 	if err := Conn.AutoMigrate(tables...); err != nil {
 		return fmt.Errorf("failed to migrate db: %w", err)
