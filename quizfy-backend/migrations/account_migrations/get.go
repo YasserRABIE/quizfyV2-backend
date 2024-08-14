@@ -1,4 +1,4 @@
-package student_migration
+package user_migrations
 
 import (
 	"errors"
@@ -8,9 +8,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func Get(phone uint) (*user.Student, error) {
-	var s user.Student
-	err := db.Conn.Where("phone = ?", phone).First(&s).Error
+func Get(phone string) (*user.Account, error) {
+	var a user.Account
+	err := db.Conn.Where("phone = ?", phone).First(&a).Error
 
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, errors.New("الرقم ده مش مسجل عندنا")
@@ -20,5 +20,5 @@ func Get(phone uint) (*user.Student, error) {
 		return nil, errors.New("حصل خطأ في السيرفر. حاول تاني بعد شوية")
 	}
 
-	return &s, nil
+	return &a, nil
 }

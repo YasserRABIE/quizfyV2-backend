@@ -1,4 +1,4 @@
-package student_migration
+package user_migrations
 
 import (
 	"errors"
@@ -8,8 +8,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func Create(s *user.Student) error {
-	err := db.Conn.Create(s).Error
+func Create(a *user.Account) error {
+	err := db.Conn.Create(a).Error
 	if err != nil {
 		// Check if the error is due to a unique constraint violation
 		if errors.Is(err, gorm.ErrDuplicatedKey) {

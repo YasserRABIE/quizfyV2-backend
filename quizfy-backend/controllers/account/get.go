@@ -1,9 +1,9 @@
-package quizzer
+package user
 
 import (
 	"net/http"
 
-	quizzerM "github.com/YasserRABIE/QUIZFYv2/migrations/quizzer_migration"
+	user_migrations "github.com/YasserRABIE/QUIZFYv2/migrations/account_migrations"
 	"github.com/YasserRABIE/QUIZFYv2/models/response"
 	"github.com/YasserRABIE/QUIZFYv2/models/user"
 	"github.com/YasserRABIE/QUIZFYv2/services/auth"
@@ -12,22 +12,22 @@ import (
 )
 
 func Get(c *gin.Context) {
-	var q user.QLoginReq
+	var req user.LoginReq
 
 	// Bind request body
-	err := c.ShouldBindJSON(&q)
+	err := c.ShouldBindJSON(&req)
 	if utils.HandleError(c, err, http.StatusBadRequest) {
 		return
 	}
 
 	// Get quizzer from database
-	quizzer, err := quizzerM.Get(q.Phone)
+	quizzer, err := user_migrations.Get(req.Phone)
 	if utils.HandleError(c, err, http.StatusBadRequest) {
 		return
 	}
 
 	// validate password with the hashed password from the database
-	err = auth.ValidatePassword(quizzer.Password, q.Password)
+	err = auth.ValidatePassword(quizzer.Password, req.Password)
 	if utils.HandleError(c, err, http.StatusUnauthorized) {
 		return
 	}
