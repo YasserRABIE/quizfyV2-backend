@@ -1,6 +1,7 @@
 package user
 
 import (
+	"errors"
 	"net/http"
 
 	user_migrations "github.com/YasserRABIE/QUIZFYv2/migrations/account_migrations"
@@ -21,7 +22,7 @@ func Get(c *gin.Context) {
 	}
 
 	// Get quizzer from database
-	quizzer, err := user_migrations.Get(req.Phone)
+	quizzer, err := user_migrations.GetByPhone(req.Phone)
 	if utils.HandleError(c, err, http.StatusBadRequest) {
 		return
 	}
@@ -40,5 +41,18 @@ func Get(c *gin.Context) {
 
 	// Send success response
 	r := response.NewSuccess(token)
+	c.JSON(http.StatusOK, r)
+}
+
+func GetValidatedUser(c *gin.Context) {
+	// Get user data from context
+	user_data, exists := c.Get("user")
+	if !exists {
+		utils.HandleError(c, errors.New("غير مصرح"), http.StatusUnauthorized)
+		return
+	}
+
+	// Send success response
+	r := response.NewSuccess(user_data.(user.Account))
 	c.JSON(http.StatusOK, r)
 }
