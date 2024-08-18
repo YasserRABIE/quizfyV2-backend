@@ -53,6 +53,6 @@ func GetValidatedUser(c *gin.Context) {
 	}
 
 	// Send success response
-	r := response.NewSuccess(user_data.(user.Account))
+	r := response.NewSuccess(user_data.(*user.Account))
 	c.JSON(http.StatusOK, r)
 }

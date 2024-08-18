@@ -12,7 +12,7 @@ import (
 
 func ValidateToken(tokenString string) (*user.Account, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return []byte(os.Getenv("SECRET_KEY")), nil
+		return []byte(os.Getenv("JWT_SECRET")), nil
 	})
 	if err != nil {
 		return nil, err
@@ -27,7 +27,7 @@ func ValidateToken(tokenString string) (*user.Account, error) {
 		return nil, fmt.Errorf("token expired")
 	}
 
-	id := claims["id"].(uint)
+	id := uint(claims["id"].(float64))
 	user, err := user_migrations.GetById(id)
 	if err != nil {
 		return nil, err
