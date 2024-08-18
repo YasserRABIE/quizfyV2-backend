@@ -2,6 +2,7 @@ package user
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	user_migrations "github.com/YasserRABIE/QUIZFYv2/migrations/account_migrations"
@@ -17,25 +18,32 @@ func Get(c *gin.Context) {
 
 	// Bind request body
 	err := c.ShouldBindJSON(&req)
-	if utils.HandleError(c, err, http.StatusBadRequest) {
+	if err != nil {
+		err = errors.New("يرجى ملأ كل الحقول!")
+		utils.HandleError(c, err, http.StatusBadRequest)
 		return
 	}
-
+	fmt.Println(req)
 	// Get quizzer from database
 	quizzer, err := user_migrations.GetByPhone(req.Phone)
-	if utils.HandleError(c, err, http.StatusBadRequest) {
+	if err != nil {
+		utils.HandleError(c, err, http.StatusBadRequest)
 		return
 	}
 
 	// validate password with the hashed password from the database
 	err = auth.ValidatePassword(quizzer.Password, req.Password)
-	if utils.HandleError(c, err, http.StatusUnauthorized) {
+	if err != nil {
+		err = errors.New("كلمة المرور غير صحيحة!")
+		utils.HandleError(c, err, http.StatusUnauthorized)
 		return
 	}
 
 	// Generate token
 	token, err := auth.CreateToken(quizzer.ID)
-	if utils.HandleError(c, err, http.StatusInternalServerError) {
+	if err != nil {
+		err = errors.New("حدث خطأ ما، يرجى المحاولة مرة أخرى!")
+		utils.HandleError(c, err, http.StatusInternalServerError)
 		return
 	}
 
@@ -48,7 +56,8 @@ func GetValidatedUser(c *gin.Context) {
 	// Get user data from context
 	user_data, exists := c.Get("user")
 	if !exists {
-		utils.HandleError(c, errors.New("غير مصرح"), http.StatusUnauthorized)
+		err := errors.New("غير مصرح")
+		utils.HandleError(c, err, http.StatusUnauthorized)
 		return
 	}
 
