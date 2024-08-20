@@ -32,6 +32,8 @@ func InitTables() error {
 	tables := []interface{}{
 		&user.Account{},
 		&quiz.Quiz{},
+		&quiz.Question{},
+		&quiz.Option{},
 	}
 	if err := Conn.AutoMigrate(tables...); err != nil {
 		return fmt.Errorf("failed to migrate db: %w", err)
