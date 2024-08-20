@@ -5,6 +5,7 @@ import (
 
 	question_migrations "github.com/YasserRABIE/QUIZFYv2/migrations/questions_migrations"
 	"github.com/YasserRABIE/QUIZFYv2/models/quiz"
+	"github.com/YasserRABIE/QUIZFYv2/models/response"
 	"github.com/YasserRABIE/QUIZFYv2/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -25,5 +26,7 @@ func Create(c *gin.Context) {
 		utils.HandleError(c, err, http.StatusInternalServerError)
 		return
 	}
-	c.JSON(http.StatusCreated, question)
+
+	r := response.NewSuccess(question)
+	c.JSON(http.StatusCreated, r)
 }
