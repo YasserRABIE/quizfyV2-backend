@@ -15,6 +15,6 @@ func QuizRoutes(api *gin.RouterGroup) {
 
 		quiz_routes.GET("/:id", quiz.GetByID)
 		quiz_routes.PUT("/:id", quiz.Update)
-		// quiz_routes.DELETE("/:id", quiz.Delete)
+		quiz_routes.DELETE("/:id", quiz.Delete)
 	}
 }
