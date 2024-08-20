@@ -6,8 +6,9 @@ import (
 
 	"github.com/YasserRABIE/QUIZFYv2/config"
 	"github.com/YasserRABIE/QUIZFYv2/db"
+	"github.com/YasserRABIE/QUIZFYv2/routes/questions"
 	"github.com/YasserRABIE/QUIZFYv2/routes/quiz"
-	routes "github.com/YasserRABIE/QUIZFYv2/routes/user"
+	"github.com/YasserRABIE/QUIZFYv2/routes/user"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -37,9 +38,11 @@ func main() {
 
 	api_v1 := r.Group("/api/v1")
 	// Register routes
-	routes.RegisterRoutes(api_v1)
+	user.RegisterRoutes(api_v1)
 	// Quiz routes
 	quiz.QuizRoutes(api_v1)
+	// Question routes
+	questions.QuestionRoutes(api_v1)
 
 	r.Run(config.GetEnv("PORT", ":3000"))
 }
