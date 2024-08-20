@@ -1,4 +1,4 @@
-package routes
+package user
 
 import (
 	user "github.com/YasserRABIE/QUIZFYv2/controllers/account"
