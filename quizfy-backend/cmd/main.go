@@ -35,7 +35,10 @@ func main() {
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
+	// assets
+	r.Static("/uploads", "./uploads")
 
+	// API group
 	api_v1 := r.Group("/api/v1")
 	// Register routes
 	user.RegisterRoutes(api_v1)
