@@ -22,7 +22,7 @@ func Create(c *gin.Context) {
 	// Bind request body
 	err := c.ShouldBindJSON(&a)
 	if err != nil {
-		err = errors.New("يرجى ملأ كل الحقول!")
+		err = errors.New("يرجى ملأ كل الحقول")
 		utils.HandleError(c, err, http.StatusBadRequest)
 		return
 	}
