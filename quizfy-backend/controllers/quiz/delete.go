@@ -11,7 +11,7 @@ import (
 )
 
 func Delete(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("quiz_id")
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
 		utils.HandleError(c, err, http.StatusBadRequest)
