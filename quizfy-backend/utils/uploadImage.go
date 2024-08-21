@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	basePath = "uploads/quiz/"
+	BasePath = "uploads/quiz/"
 )
 
 // UploadImage uploads an image to the server and returns the path to the image
@@ -20,13 +20,13 @@ func UploadImage(imageBase64 string, extension string, quizID, questionID uint) 
 	}
 
 	// Ensure the base path exists
-	if err := os.MkdirAll(basePath, os.ModePerm); err != nil {
+	if err := os.MkdirAll(BasePath, os.ModePerm); err != nil {
 		fmt.Println("Error creating base path:", err)
 		return ""
 	}
 
 	// Ensure the quiz directory exists
-	quizPath := filepath.Join(basePath, fmt.Sprintf("%d", quizID))
+	quizPath := filepath.Join(BasePath, fmt.Sprintf("%d", quizID))
 	if err := os.MkdirAll(quizPath, os.ModePerm); err != nil {
 		fmt.Println("Error creating quiz directory:", err)
 		return ""
