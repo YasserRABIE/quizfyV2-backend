@@ -1,7 +1,6 @@
 package question
 
 import (
-	"errors"
 	"net/http"
 
 	question_migrations "github.com/YasserRABIE/QUIZFYv2/migrations/questions_migrations"
@@ -28,17 +27,17 @@ func Create(c *gin.Context) {
 		return
 	}
 
-	
 	if r.ImageData != nil {
 		// Upload the image to the server
-		r.ImagePath = utils.UploadImage(
+		var err error
+		r.ImagePath, err = utils.UploadImage(
 			r.ImageData.Image,
 			r.ImageData.Extension,
 			r.QuizID,
 			r.ID,
 		)
-		if r.ImagePath == "" {
-			utils.HandleError(c, errors.New("failed to upload image"), http.StatusInternalServerError)
+		if err != nil {
+			utils.HandleError(c, err, http.StatusInternalServerError)
 			return
 		}
 		// Update the question with the image paths

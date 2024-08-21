@@ -28,3 +28,17 @@ func Delete(id uint) (string, error) {
 
 	return imagePath, nil
 }
+
+func DeleteOptions(questionID uint, excludeIDs []uint) error {
+	query := db.Conn.Where("question_id = ?", questionID)
+
+	if len(excludeIDs) > 0 {
+		query = query.Where("id NOT IN (?)", excludeIDs)
+	}
+
+	if err := query.Delete(&quiz.Option{}).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

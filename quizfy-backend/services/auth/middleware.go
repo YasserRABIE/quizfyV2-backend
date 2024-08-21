@@ -13,7 +13,7 @@ func AuthMiddleware(c *gin.Context) {
 	// Get token from Authorization header
 	bearerToken := c.GetHeader("Authorization")
 	if bearerToken == "" {
-		utils.HandleError(c, fmt.Errorf("Authorization header missing"), http.StatusUnauthorized)
+		utils.HandleError(c, fmt.Errorf("authorization header missing"), http.StatusUnauthorized)
 		return
 	}
 
