@@ -3,25 +3,22 @@ package question_migrations
 import (
 	"github.com/YasserRABIE/QUIZFYv2/db"
 	"github.com/YasserRABIE/QUIZFYv2/models/quiz"
+	"gorm.io/gorm"
 )
 
-func Delete(id uint) (string, error) {
+func DeleteByID(id uint) (string, error) {
 	var imagePath string
 
+	// Get the image path before deletion
 	err := db.Conn.Model(&quiz.Question{}).
 		Where("id = ?", id).
 		Pluck("image_path", &imagePath).Error
-
 	if err != nil {
 		return "", err
 	}
 
-	err = db.Conn.Where("question_id = ?", id).Delete(&quiz.Option{}).Error
-	if err != nil {
-		return "", err
-	}
-
-	err = db.Conn.Delete(&quiz.Question{}, id).Error
+	// Delete the question, related options will be deleted automatically
+	err = db.Conn.Delete(&quiz.Question{Model: gorm.Model{ID: id}}).Error
 	if err != nil {
 		return "", err
 	}

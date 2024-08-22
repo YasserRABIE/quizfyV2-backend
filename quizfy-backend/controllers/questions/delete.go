@@ -19,7 +19,7 @@ func Delete(c *gin.Context) {
 		return
 	}
 
-	imagePath, err := question_migrations.Delete(uint(questionIDInt))
+	imagePath, err := question_migrations.DeleteByID(uint(questionIDInt))
 	if err != nil {
 		utils.HandleError(c, err, http.StatusBadRequest)
 		return

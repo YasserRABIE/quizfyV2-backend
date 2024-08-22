@@ -12,6 +12,8 @@ var (
 	DBName     string
 	DBHost     string
 	DBPort     string
+
+	BasePath string
 )
 
 func InitConfig() {
@@ -20,6 +22,8 @@ func InitConfig() {
 	DBName = GetEnv("DB_NAME", "postgres")
 	DBHost = GetEnv("DB_HOST", "localhost")
 	DBPort = GetEnv("DB_PORT", "5432")
+
+	BasePath = GetEnv("QUIZ_UPLOAD_PATH", "uploads/quiz/")
 }
 
 func GetEnv(key, defaultValue string) string {

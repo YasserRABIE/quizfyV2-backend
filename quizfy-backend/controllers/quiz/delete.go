@@ -2,8 +2,10 @@ package quiz
 
 import (
 	"net/http"
+	"os"
 	"strconv"
 
+	"github.com/YasserRABIE/QUIZFYv2/config"
 	"github.com/YasserRABIE/QUIZFYv2/migrations/quiz_migrations"
 	"github.com/YasserRABIE/QUIZFYv2/models/response"
 	"github.com/YasserRABIE/QUIZFYv2/utils"
@@ -19,6 +21,12 @@ func Delete(c *gin.Context) {
 	}
 
 	err = quiz_migrations.DeleteByID(uint(idInt))
+	if err != nil {
+		utils.HandleError(c, err, http.StatusBadRequest)
+		return
+	}
+
+	err = os.RemoveAll(config.BasePath + id)
 	if err != nil {
 		utils.HandleError(c, err, http.StatusBadRequest)
 		return
