@@ -5,6 +5,7 @@ import "gorm.io/gorm"
 type QuestionReq struct {
 	Question
 	*ImageData
+	NoImage bool `json:"no_image"`
 }
 
 type Question struct {
