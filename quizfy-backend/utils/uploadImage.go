@@ -9,14 +9,6 @@ import (
 	"github.com/YasserRABIE/QUIZFYv2/config"
 )
 
-var (
-	BasePath = getBasePath()
-)
-
-func getBasePath() string {
-	return config.GetEnv("QUIZ_UPLOAD_PATH", "uploads/quiz/")
-}
-
 // UploadImage uploads an image to the server and returns the path to the image
 func UploadImage(imageBase64 string, extension string, quizID, questionID uint) (string, error) {
 	// Decode the base64 image data
@@ -31,12 +23,12 @@ func UploadImage(imageBase64 string, extension string, quizID, questionID uint) 
 	}
 
 	// Ensure the base path exists
-	if err := os.MkdirAll(BasePath, 0755); err != nil {
+	if err := os.MkdirAll(config.BasePath, 0755); err != nil {
 		return "", err
 	}
 
 	// Ensure the quiz directory exists
-	quizPath := filepath.Join(BasePath, fmt.Sprintf("%d", quizID))
+	quizPath := filepath.Join(config.BasePath, fmt.Sprintf("%d", quizID))
 	if err := os.MkdirAll(quizPath, 0755); err != nil {
 		return "", err
 	}
