@@ -18,11 +18,9 @@ func Update(c *gin.Context) {
 		return
 	}
 
-	if r.ImageData != nil {
-		if err := handleImageUpdate(&r, r.Question.ID); err != nil {
-			utils.HandleError(c, err, http.StatusInternalServerError)
-			return
-		}
+	if err := handleImageUpdate(&r, r.Question.ID); err != nil {
+		utils.HandleError(c, err, http.StatusInternalServerError)
+		return
 	}
 
 	// Update the question options and question itself
@@ -36,19 +34,24 @@ func Update(c *gin.Context) {
 }
 
 func handleImageUpdate(r *quiz.QuestionReq, questionID uint) error {
-	if r.ImagePath != "" {
+	// if there is an image and the user wants to remove it
+	if r.ImagePath != "" && r.NoImage {
 		if _, err := os.Stat(r.ImagePath); err == nil {
 			if err := os.Remove(r.ImagePath); err != nil {
 				return err
 			}
 		}
+		r.ImagePath = ""
 	}
 
-	imagePath, err := utils.UploadImage(r.ImageData.Image, r.ImageData.Extension, r.QuizID, questionID)
-	if err != nil {
-		return err
+	// if there is an image and the user wants to update it
+	if r.ImageData != nil {
+		imagePath, err := utils.UploadImage(r.ImageData.Image, r.ImageData.Extension, r.QuizID, questionID)
+		if err != nil {
+			return err
+		}
+		r.ImagePath = imagePath
 	}
-	r.ImagePath = imagePath
 	return nil
 }
 
