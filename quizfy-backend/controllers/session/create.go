@@ -21,7 +21,7 @@ func Create(c *gin.Context) {
 	}
 
 	// Create a new session
-	session, err := session_migrations.Create(uint(quizIDInt), userID)
+	session, err := session_migrations.Create(userID, uint(quizIDInt))
 	if err != nil {
 		utils.HandleError(c, err, http.StatusInternalServerError)
 		return

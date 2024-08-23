@@ -5,7 +5,7 @@ import (
 	"github.com/YasserRABIE/QUIZFYv2/models/session"
 )
 
-func Create(quizID, userID uint) (*session.Session, error) {
+func Create(userID, quizID uint) (*session.Session, error) {
 	session := &session.Session{
 		QuizID: quizID,
 		UserID: userID,
