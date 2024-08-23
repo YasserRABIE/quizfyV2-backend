@@ -38,14 +38,3 @@ func (s *Session) BeforeCreate(tx *gorm.DB) (err error) {
 	s.EndTime = s.StartTime.Add(time.Duration(*q.Duration) * time.Minute)
 	return
 }
-
-// BeforeUpdate hook updates the start time of the session
-// and checks if the session is expired
-func (s *Session) BeforeUpdate(tx *gorm.DB) (err error) {
-	// Check if the session is expired
-	if s.EndTime.Before(time.Now()) {
-		s.Status = Reviewed
-	}
-	s.StartTime = time.Now()
-	return
-}
