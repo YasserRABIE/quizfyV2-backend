@@ -12,8 +12,8 @@ func SessionRoutes(api *gin.RouterGroup) {
 		session_routes.POST("", session.Create)
 		session_routes.PUT("/:session_id", session.Update)
 
+		session_routes.GET("", session.Get)
 		// session_routes.GET("/all", session.GetAll)
-		// session_routes.GET("/:session_id", session.GetByID)
 		// session_routes.DELETE("/:session_id", session.Delete)
 	}
 }
