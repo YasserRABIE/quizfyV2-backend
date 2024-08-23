@@ -7,23 +7,28 @@ import (
 )
 
 func DeleteByID(id uint) (string, error) {
-	var imagePath string
+	var q struct {
+		ImagePath string
+		QuizID    uint
+		Degree    uint
+	}
 
-	// Get the image path before deletion
+	// Get the image path and quiz ID before deletion
 	err := db.Conn.Model(&quiz.Question{}).
 		Where("id = ?", id).
-		Pluck("image_path", &imagePath).Error
+		Select("image_path, quiz_id, degree").
+		Scan(&q).Error
 	if err != nil {
 		return "", err
 	}
 
-	// Delete the question, related options will be deleted automatically
-	err = db.Conn.Delete(&quiz.Question{Model: gorm.Model{ID: id}}).Error
+	// Delete the question
+	err = db.Conn.Delete(&quiz.Question{Model: gorm.Model{ID: id}, QuizID: q.QuizID, Degree: q.Degree}).Error
 	if err != nil {
 		return "", err
 	}
 
-	return imagePath, nil
+	return q.ImagePath, nil
 }
 
 func DeleteOptions(questionID uint, excludeIDs []uint) error {

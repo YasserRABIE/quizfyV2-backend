@@ -14,6 +14,10 @@ type Quiz struct {
 	Duration    *int   `json:"duration" binding:"required"`
 	OpensAt     string `json:"opens_at" gorm:"not null" binding:"required"`
 	ClosesAt    string `json:"closes_at" gorm:"not null" binding:"required"`
+
+	//? later we can add these fields
+	QuestionsCount int `json:"questions_count" gorm:"default:0"`
+	TotalDegree    int `json:"total_degree" gorm:"default:0"`
 }
 
 // BeforeDelete hook deletes all questions related to the quiz
@@ -28,7 +32,7 @@ func (q *Quiz) BeforeDelete(tx *gorm.DB) (err error) {
 
 	// Delete all questions associated with this quiz and their options will be deleted automatically
 	for _, id := range questionIDs {
-		if err := tx.Delete(&Question{Model: gorm.Model{ID: id}}).Error; err != nil {
+		if err := tx.Delete(&Question{Model: gorm.Model{ID: id}, QuizID: q.ID}).Error; err != nil {
 			return err
 		}
 	}
