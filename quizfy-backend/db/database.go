@@ -5,6 +5,7 @@ import (
 
 	"github.com/YasserRABIE/QUIZFYv2/config"
 	"github.com/YasserRABIE/QUIZFYv2/models/quiz"
+	"github.com/YasserRABIE/QUIZFYv2/models/session"
 	"github.com/YasserRABIE/QUIZFYv2/models/user"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -34,6 +35,7 @@ func InitTables() error {
 		&quiz.Quiz{},
 		&quiz.Question{},
 		&quiz.Option{},
+		&session.Session{},
 	}
 	if err := Conn.AutoMigrate(tables...); err != nil {
 		return fmt.Errorf("failed to migrate db: %w", err)
