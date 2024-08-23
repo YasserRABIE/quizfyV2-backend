@@ -15,9 +15,9 @@ type Quiz struct {
 	OpensAt     string `json:"opens_at" gorm:"not null" binding:"required"`
 	ClosesAt    string `json:"closes_at" gorm:"not null" binding:"required"`
 
-	//? later we can add these fields
-	QuestionsCount int `json:"questions_count" gorm:"default:0"`
-	TotalDegree    int `json:"total_degree" gorm:"default:0"`
+	TeacherName    string `json:"teacher_name" gorm:"not null"`
+	QuestionsCount int    `json:"questions_count" gorm:"default:0"`
+	TotalDegree    int    `json:"total_degree" gorm:"default:0"`
 }
 
 // BeforeDelete hook deletes all questions related to the quiz
