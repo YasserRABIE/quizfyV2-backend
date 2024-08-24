@@ -9,10 +9,10 @@ import (
 func SessionRoutes(api *gin.RouterGroup) {
 	session_routes := api.Group("quiz/:quiz_id/session", auth.AuthMiddleware)
 	{
+		session_routes.GET("", session.Get)
 		session_routes.POST("", session.Create)
 		session_routes.PUT("/:session_id", session.Update)
 
-		session_routes.GET("", session.Get)
 		// session_routes.GET("/all", session.GetAll)
 		// session_routes.DELETE("/:session_id", session.Delete)
 	}
