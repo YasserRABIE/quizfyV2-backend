@@ -4,12 +4,11 @@ import (
 	"github.com/YasserRABIE/QUIZFYv2/db"
 	question_migrations "github.com/YasserRABIE/QUIZFYv2/migrations/questions_migrations"
 	"github.com/YasserRABIE/QUIZFYv2/models/quiz"
-	"github.com/YasserRABIE/QUIZFYv2/models/result"
 )
 
-func Create(sessionID, quizID uint, result *result.Result) error {
+func Create(sessionID, quizID uint, result *quiz.Result) error {
 	for i := range result.ReviewedAnswers {
-		answer := &result.ReviewedAnswers[i] 
+		answer := &result.ReviewedAnswers[i]
 
 		var err error
 		answer.Question, err = question_migrations.GetByID(answer.QuestionID)
@@ -31,7 +30,7 @@ func Create(sessionID, quizID uint, result *result.Result) error {
 	return db.Conn.Create(result).Error
 }
 
-func updateResultCounts(isCorrect bool, result *result.Result, question *quiz.Question) {
+func updateResultCounts(isCorrect bool, result *quiz.Result, question *quiz.Question) {
 	if isCorrect {
 		result.CorrectCount++
 		result.Score += question.Degree
