@@ -18,7 +18,7 @@ func Create(c *gin.Context) {
 		return
 	}
 
-	_, err := session_migrations.Update(answers[0].SessionID)
+	_, err := session_migrations.Finish(answers[0].SessionID)
 	if err != nil {
 		utils.HandleError(c, err, http.StatusInternalServerError)
 		return
