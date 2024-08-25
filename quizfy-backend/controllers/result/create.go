@@ -6,14 +6,15 @@ import (
 
 	"github.com/YasserRABIE/QUIZFYv2/migrations/result_migrations"
 	"github.com/YasserRABIE/QUIZFYv2/migrations/session_migrations"
+	"github.com/YasserRABIE/QUIZFYv2/models/quiz"
 	"github.com/YasserRABIE/QUIZFYv2/models/response"
-	"github.com/YasserRABIE/QUIZFYv2/models/result"
+
 	"github.com/YasserRABIE/QUIZFYv2/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func Create(c *gin.Context) {
-	var result result.Result
+	var result quiz.Result
 
 	sessionID, quizID, err := getIdsAsUint(c)
 	if err != nil {
