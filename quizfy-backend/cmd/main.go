@@ -6,6 +6,7 @@ import (
 
 	"github.com/YasserRABIE/QUIZFYv2/config"
 	"github.com/YasserRABIE/QUIZFYv2/db"
+	"github.com/YasserRABIE/QUIZFYv2/routes/answer"
 	"github.com/YasserRABIE/QUIZFYv2/routes/questions"
 	"github.com/YasserRABIE/QUIZFYv2/routes/quiz"
 	"github.com/YasserRABIE/QUIZFYv2/routes/session"
@@ -49,6 +50,8 @@ func main() {
 	questions.QuestionRoutes(api_v1)
 	// Session routes
 	session.SessionRoutes(api_v1)
+	// Answer routes
+	answer.AnswerRoutes(api_v1)
 
 	r.Run(config.GetEnv("PORT", ":3000"))
 }
