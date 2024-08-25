@@ -4,6 +4,7 @@ import (
 	"github.com/YasserRABIE/QUIZFYv2/db"
 	question_migrations "github.com/YasserRABIE/QUIZFYv2/migrations/questions_migrations"
 	"github.com/YasserRABIE/QUIZFYv2/models/quiz"
+	"gorm.io/gorm"
 )
 
 func Create(sessionID, quizID uint, result *quiz.Result) error {
@@ -27,7 +28,7 @@ func Create(sessionID, quizID uint, result *quiz.Result) error {
 			updateResultCounts(answer.IsCorrect, result, answer.Question)
 		}
 	}
-	return db.Conn.Create(result).Error
+	return db.Conn.Session(&gorm.Session{SkipHooks: true}).Create(result).Error
 }
 
 func updateResultCounts(isCorrect bool, result *quiz.Result, question *quiz.Question) {
