@@ -31,3 +31,23 @@ func Update(sessionID uint) (*session.Session, error) {
 
 	return &s, nil
 }
+
+func Finish(sessionID uint) (*session.Session, error) {
+	var s session.Session
+	if err := db.Conn.First(&s, sessionID).Error; err != nil {
+		return nil, err
+	}
+
+	if s.Status == session.Active {
+		// Update the EndTime
+		s.StartTime = time.Now()
+		s.Status = session.Reviewed
+	}
+
+	// Save the session
+	if err := db.Conn.Save(&s).Error; err != nil {
+		return nil, err
+	}
+
+	return &s, nil
+}

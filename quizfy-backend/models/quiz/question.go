@@ -19,7 +19,7 @@ type Question struct {
 	Type       string   `json:"type" gorm:"not null" binding:"required"` // MCQ | BOOL
 	Degree     uint     `json:"degree" gorm:"not null" binding:"required"`
 	Options    []Option `json:"options" gorm:"foreignKey:QuestionID;constraint:OnDelete:CASCADE;"`
-	BoolAnswer *bool    `json:"bool_answer"` //  Bool
+	BoolAnswer bool     `json:"bool_answer"` //  Bool
 	ImagePath  string   `json:"image_path"`
 	QuizID     uint     `json:"quiz_id" gorm:"not null" binding:"required"`
 }
@@ -85,6 +85,8 @@ type Option struct {
 	IsCorrect  bool   `json:"is_correct"`
 	QuestionID uint   `json:"-"`
 }
+
+
 
 type ImageData struct {
 	Image     string `json:"image"`
