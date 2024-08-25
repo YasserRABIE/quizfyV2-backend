@@ -1,4 +1,4 @@
-package result
+package quiz
 
 type UserAnswer struct {
 	OptionID   uint `json:"option_id"`

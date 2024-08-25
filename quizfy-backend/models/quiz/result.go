@@ -1,7 +1,6 @@
-package result
+package quiz
 
 import (
-	"github.com/YasserRABIE/QUIZFYv2/models/quiz"
 	"gorm.io/gorm"
 )
 
@@ -17,9 +16,9 @@ type Result struct {
 
 type ReviewedAnswer struct {
 	gorm.Model
-	Question  *quiz.Question `json:"question" gorm:"foreignKey:QuestionID;references:ID"`
-	ResultID  uint           `json:"-"`
-	IsCorrect bool           `json:"is_correct"`
+	Question  *Question `json:"question" gorm:"foreignKey:QuestionID;references:ID"`
+	ResultID  uint      `json:"-"`
+	IsCorrect bool      `json:"is_correct"`
 
 	// this data is form the params
 	SessionID uint `json:"session_id" gorm:"not null"`
