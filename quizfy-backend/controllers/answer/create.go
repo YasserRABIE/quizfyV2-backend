@@ -12,7 +12,7 @@ import (
 )
 
 func Create(c *gin.Context) {
-	var answers []result.Answer
+	var answers []result.UserAnswer
 	if err := c.ShouldBindJSON(&answers); err != nil {
 		utils.HandleError(c, err, http.StatusBadRequest)
 		return

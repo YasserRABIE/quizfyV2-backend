@@ -37,7 +37,7 @@ func InitTables() error {
 		&quiz.Question{},
 		&quiz.Option{},
 		&session.Session{},
-		&result.Answer{},
+		&result.UserAnswer{},
 	}
 	if err := Conn.AutoMigrate(tables...); err != nil {
 		return fmt.Errorf("failed to migrate db: %w", err)
