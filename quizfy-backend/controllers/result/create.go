@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/YasserRABIE/QUIZFYv2/migrations/result_migrations"
+	"github.com/YasserRABIE/QUIZFYv2/migrations/session_migrations"
 	"github.com/YasserRABIE/QUIZFYv2/models/response"
 	"github.com/YasserRABIE/QUIZFYv2/models/result"
 	"github.com/YasserRABIE/QUIZFYv2/utils"
@@ -23,13 +24,21 @@ func Create(c *gin.Context) {
 		utils.HandleError(c, err, http.StatusBadRequest)
 		return
 	}
+
+	// finish the session
+	_, err = session_migrations.Finish(sessionID)
+	if err != nil {
+		utils.HandleError(c, err, http.StatusInternalServerError)
+		return
+	}
+
 	err = result_migrations.Create(sessionID, quizID, &result)
 	if err != nil {
 		utils.HandleError(c, err, http.StatusInternalServerError)
 		return
 	}
 
-	r := response.NewSuccess(result)
+	r := response.NewSuccess("تم إرسال النتيجة بنجاح")
 	c.JSON(http.StatusCreated, r)
 }
 
