@@ -7,7 +7,7 @@ import (
 
 func Get(sessionID uint) (*quiz.Result, error) {
 	var result quiz.Result
-	err := db.Conn.Where("session_id = ?", sessionID).First(&result).Error
+	err := db.Conn.Where("session_id = ?", sessionID).Preload("ReviewedAnswers.Question").First(&result).Error
 	if err != nil {
 		return nil, err
 	}
