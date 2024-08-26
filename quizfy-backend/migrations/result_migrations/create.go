@@ -8,6 +8,9 @@ import (
 )
 
 func Create(sessionID, quizID uint, result *quiz.Result) error {
+	result.QuizID = quizID
+	result.SessionID = sessionID
+	// validate the answers
 	for i := range result.ReviewedAnswers {
 		answer := &result.ReviewedAnswers[i]
 
