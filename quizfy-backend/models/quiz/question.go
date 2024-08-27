@@ -21,6 +21,7 @@ type Question struct {
 	Options    []Option `json:"options" gorm:"foreignKey:QuestionID;constraint:OnDelete:CASCADE;"`
 	BoolAnswer bool     `json:"bool_answer"` //  Bool
 	ImagePath  string   `json:"image_path"`
+	Explanation string `json:"explanation"`
 	QuizID     uint     `json:"quiz_id" gorm:"not null" binding:"required"`
 }
 
