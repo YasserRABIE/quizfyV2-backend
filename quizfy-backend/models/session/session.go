@@ -19,6 +19,7 @@ type Session struct {
 	QuizID uint `json:"quiz_id" gorm:"not null;uniqueIndex:idx_user_quiz" binding:"required"`
 	UserID uint `json:"user_id" gorm:"not null;uniqueIndex:idx_user_quiz" binding:"required"`
 
+	Duration  *int          `json:"duration"`
 	Status    SessionStatus `json:"status" gorm:"default:'active'"`
 	StartTime time.Time     `json:"start_time"`
 	EndTime   time.Time     `json:"end_time"`
@@ -34,6 +35,7 @@ func (s *Session) BeforeCreate(tx *gorm.DB) (err error) {
 	if !q.IsTimeBased {
 		return
 	}
+	s.Duration = q.Duration
 	s.StartTime = time.Now()
 	s.EndTime = s.StartTime.Add(time.Duration(*q.Duration) * time.Minute)
 	return
