@@ -41,9 +41,9 @@ func GetByID(id uint) (*quiz.Quiz, error) {
 // ========================================
 
 // GetByQuizzerID get quiz by quizzer id and state
-func GetByQuizzerID(quizzerID uint, state string) ([]quiz.Quiz, error) {
+func GetExamsByQuizzerID(quizzerID uint, state string) ([]quiz.Quiz, error) {
 	var q []quiz.Quiz
-	query := "user_id = ?"
+	query := "user_id = ? AND type = 'quiz'"
 
 	switch state {
 	case "private":

@@ -20,6 +20,6 @@ func QuizRoutes(api *gin.RouterGroup) {
 		// ========================================
 		// quizzer
 		// ========================================
-		quiz_routes.GET("/quizzer", quiz.GetByQuizzerID)
+		quiz_routes.GET("/quizzer/exams", quiz.GetExamsByQuizzerID)
 	}
 }

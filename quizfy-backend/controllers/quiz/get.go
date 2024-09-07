@@ -47,11 +47,11 @@ func GetByID(c *gin.Context) {
 // ========================================
 
 // GetByQuizzerID get quiz by quizzer id and state
-func GetByQuizzerID(c *gin.Context) {
+func GetExamsByQuizzerID(c *gin.Context) {
 	quizzerID := c.MustGet("user_id").(uint)
 	state := c.Query("state")
 
-	quiz, err := quiz_migrations.GetByQuizzerID(quizzerID, state)
+	quiz, err := quiz_migrations.GetExamsByQuizzerID(quizzerID, state)
 	if err != nil {
 		utils.HandleError(c, err, http.StatusBadRequest)
 		return
