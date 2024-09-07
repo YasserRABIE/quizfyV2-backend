@@ -42,6 +42,7 @@ func GetByID(c *gin.Context) {
 	r := response.NewSuccess(quiz)
 	c.JSON(http.StatusOK, r)
 }
+
 // ========================================
 // quizzer
 // ========================================
@@ -52,6 +53,20 @@ func GetExamsByQuizzerID(c *gin.Context) {
 	state := c.Query("state")
 
 	quiz, err := quiz_migrations.GetExamsByQuizzerID(quizzerID, state)
+	if err != nil {
+		utils.HandleError(c, err, http.StatusBadRequest)
+		return
+	}
+
+	r := response.NewSuccess(quiz)
+	c.JSON(http.StatusOK, r)
+}
+
+func GetAssignmentsByQuizzerID(c *gin.Context) {
+	quizzerID := c.MustGet("user_id").(uint)
+	state := c.Query("state")
+
+	quiz, err := quiz_migrations.GetAssignmentsByQuizzerID(quizzerID, state)
 	if err != nil {
 		utils.HandleError(c, err, http.StatusBadRequest)
 		return

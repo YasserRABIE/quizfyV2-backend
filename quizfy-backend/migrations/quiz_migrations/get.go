@@ -50,6 +50,29 @@ func GetExamsByQuizzerID(quizzerID uint, state string) ([]quiz.Quiz, error) {
 		query += " AND opens_at::timestamp > NOW()"
 	case "public":
 		query += " AND opens_at::timestamp <= NOW() AND closes_at::timestamp >= NOW()"
+	case "closed":
+		query += " AND closes_at::timestamp < NOW()"
+	}
+
+	if err := db.Conn.Where(query, quizzerID).Find(&q).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.New("لم يتم العثور على الاختبارات")
+		}
+		return nil, errors.New("حدث خطأ أثناء استرجاع الاختبارات")
+	}
+
+	return q, nil
+}
+
+func GetAssignmentsByQuizzerID(quizzerID uint, state string) ([]quiz.Quiz, error) {
+	var q []quiz.Quiz
+	query := "user_id = ? AND type = 'assignment'"
+
+	switch state {
+	case "private":
+		query += " AND opens_at::timestamp > NOW()"
+	case "public":
+		query += " AND opens_at::timestamp <= NOW() AND closes_at::timestamp >= NOW()"
 	}
 
 	if err := db.Conn.Where(query, quizzerID).Find(&q).Error; err != nil {

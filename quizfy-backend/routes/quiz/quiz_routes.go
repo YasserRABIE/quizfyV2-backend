@@ -21,5 +21,6 @@ func QuizRoutes(api *gin.RouterGroup) {
 		// quizzer
 		// ========================================
 		quiz_routes.GET("/quizzer/exams", quiz.GetExamsByQuizzerID)
+		quiz_routes.GET("/quizzer/assignments", quiz.GetAssignmentsByQuizzerID)
 	}
 }
