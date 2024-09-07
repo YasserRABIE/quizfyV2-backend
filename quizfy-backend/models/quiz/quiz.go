@@ -10,8 +10,8 @@ type Quiz struct {
 	Description string `json:"description" gorm:"not null" binding:"required"`
 	Difficulty  string `json:"difficulty" gorm:"not null" binding:"required"`
 	Type        string `json:"type" gorm:"not null" binding:"required"`
-	IsTimeBased bool   `json:"is_time_based" gorm:"not null" binding:"required"`
-	Duration    *int   `json:"duration" binding:"required"`
+	IsTimeBased bool   `json:"is_time_based" gorm:"not null"`
+	Duration    *int   `json:"duration"`
 	OpensAt     string `json:"opens_at" gorm:"not null" binding:"required"`
 	ClosesAt    string `json:"closes_at" gorm:"not null" binding:"required"`
 
